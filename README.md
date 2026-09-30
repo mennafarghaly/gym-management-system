@@ -1,8 +1,8 @@
 # Gym Management System
 
 ## Team Members
-- [Your Name] (solo project)
-
+- [Menna Tallah Farghaly] (solo project)
+ 
 ## Project Description
 A desktop application for managing a gym: members, trainers, memberships, payments and
 attendance. It is built with Python and Object-Oriented Programming, stores its data in a
