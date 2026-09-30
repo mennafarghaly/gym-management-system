@@ -1,0 +1,118 @@
+GYM MANAGEMENT SYSTEM - TEST SCENARIOS
+=======================================
+
+Setup before starting:
+  1. Close the app, delete gym_data.json (if it exists).
+  2. Run: python gym_app.py
+  3. In the Members tab, add two members first:
+       - ID: 1, Name: Menna, Email: menna@gmail.com, Phone: 01012345678, Join Date: 2026-09-01
+       - ID: 2, Name: Ali,   Email: ali@gmail.com,   Phone: 01098765432, Join Date: 2026-09-01
+  4. Run the scenarios IN ORDER (later ones depend on earlier ones).
+
+How to fill: after running each scenario, write what actually happened in "Actual Result"
+and put Pass / Fail in "Status".
+
+-----------------------------------------------------------------
+CATEGORY 1: SUCCESSFUL SCENARIOS
+-----------------------------------------------------------------
+
+TS-01 | Add a new member
+  Steps: Members tab -> ID: 3, Name: Sara, Email: sara@gmail.com, Phone: 01011112222,
+         Join Date: 2026-09-01 -> click "Add Member".
+  Expected: Message "Member added successfully". Sara appears in the table.
+  Actual Result:
+  Status:
+
+TS-02 | Create an active membership
+  Steps: Memberships tab -> Membership ID: 100, Member ID: 1, Plan: Monthly,
+         Start: 2026-01-01, End: 2027-01-01 -> click "Create Membership".
+  Expected: Message "Membership created successfully". Row appears with Status = Active.
+            Dashboard shows Active Memberships = 1.
+  Actual Result:
+  Status:
+
+TS-03 | Record attendance for a member with an active membership
+  Steps: Attendance tab -> Attendance ID: 1, Member ID: 1, Date: 2026-09-28
+         -> click "Record Attendance".
+  Expected: Message "Attendance recorded successfully". Row appears in the table.
+  Actual Result:
+  Status:
+
+-----------------------------------------------------------------
+CATEGORY 2: INVALID INPUT SCENARIOS
+-----------------------------------------------------------------
+
+TS-04 | Add a member with an empty ID
+  Steps: Members tab -> leave ID empty, Name: Test -> click "Add Member".
+  Expected: Error message "ID and Name are required". Nothing is added.
+  Actual Result:
+  Status:
+
+TS-05 | Payment amount is not a number
+  Steps: Payments tab -> Payment ID: 1, Member ID: 1, Amount: abc, Date: 2026-09-28
+         -> click "Record Payment".
+  Expected: Error message "Amount must be a number". Nothing is added.
+  Actual Result:
+  Status:
+
+TS-06 | Membership with a wrongly formatted date
+  Steps: Memberships tab -> Membership ID: 101, Member ID: 2, Plan: Monthly,
+         Start: 3-9-2026, End: 2027-01-01 -> click "Create Membership".
+  Expected: Error message "Dates must be in YYYY-MM-DD format, for example 2026-09-03".
+            Nothing is added.
+  Actual Result:
+  Status:
+
+-----------------------------------------------------------------
+CATEGORY 3: BUSINESS-RULE VIOLATIONS
+-----------------------------------------------------------------
+
+TS-07 | A member cannot have two active memberships
+  Steps: Memberships tab -> Membership ID: 102, Member ID: 1, Plan: Annual,
+         Start: 2026-02-01, End: 2027-02-01 -> click "Create Membership".
+         (Member 1 already has an active membership from TS-02.)
+  Expected: Error message "Member 1 already has an active membership". Nothing is added.
+  Actual Result:
+  Status:
+
+TS-08 | Payment amount must be greater than zero
+  Steps: Payments tab -> Payment ID: 2, Member ID: 1, Amount: 0, Date: 2026-09-28
+         -> click "Record Payment". Then repeat with Amount: -50.
+  Expected: Error message "Amount must be greater than zero" both times. Nothing is added.
+  Actual Result:
+  Status:
+
+TS-09 | A member without an active membership cannot attend
+  Steps: Attendance tab -> Attendance ID: 2, Member ID: 2, Date: 2026-09-28
+         -> click "Record Attendance". (Member 2 has no membership; TS-06 failed.)
+  Expected: Error message "Member 2 has no active membership". Nothing is added.
+  Actual Result:
+  Status:
+
+TS-10 | A member with an active membership cannot be deleted
+  Steps: Members tab -> click the row of Menna (ID 1) -> click "Delete Selected"
+         -> confirm "Yes".
+  Expected: Error message "Cannot delete a member with an active membership".
+            Menna stays in the table.
+  Actual Result:
+  Status:
+
+-----------------------------------------------------------------
+CATEGORY 4: EDGE CASES
+-----------------------------------------------------------------
+
+TS-11 | Membership that ends exactly today is still active
+  Steps: Memberships tab -> Membership ID: 103, Member ID: 3, Plan: Daily,
+         Start: 2026-01-01, End: (TODAY's date in YYYY-MM-DD)
+         -> click "Create Membership".
+  Expected: Membership is created with Status = Active (it only expires the day AFTER
+            its end date).
+  Actual Result:
+  Status:
+
+TS-12 | Start the application with no data file
+  Steps: Close the app with the X button. Delete gym_data.json. Run python gym_app.py.
+  Expected: The app opens normally (no crash). All tables are empty and the Dashboard
+            shows zeros.
+  Actual Result:
+  Status:

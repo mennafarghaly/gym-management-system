@@ -1,0 +1,39 @@
+{
+    "gym_name": "My Gym",
+    "members": [
+        {
+            "id": "01",
+            "name": "m",
+            "email": "m@g.oo",
+            "phone": "0202",
+            "join_date": "2026-03-09"
+        },
+        {
+            "id": "02",
+            "name": "f",
+            "email": "f@g.p",
+            "phone": "0330404",
+            "join_date": "2026-05-02"
+        }
+    ],
+    "trainers": [
+        {
+            "id": "1",
+            "name": "mohamed",
+            "email": "mog@gamil.com",
+            "phone": "011111",
+            "specialization": "bodybuilding"
+        }
+    ],
+    "memberships": [
+        {
+            "membership_id": "5",
+            "member_id": "1",
+            "plan_type": "fit",
+            "start_date": "2026-03-09",
+            "end_date": "2027-03-09"
+        }
+    ],
+    "payments": [],
+    "attendances": []
+}

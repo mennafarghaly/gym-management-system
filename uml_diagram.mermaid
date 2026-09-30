@@ -1,0 +1,70 @@
+classDiagram
+    class Person {
+        <<abstract>>
+        -id
+        -name
+        -email
+        -phone
+        +get_role()*
+    }
+    class Member {
+        -join_date
+        +get_role()
+    }
+    class Trainer {
+        -specialization
+        +get_role()
+    }
+    class Membership {
+        -membership_id
+        -member_id
+        -plan_type
+        -start_date
+        -end_date
+        +is_active()
+    }
+    class Payment {
+        -payment_id
+        -member_id
+        -amount
+        -payment_date
+    }
+    class Attendance {
+        -attendance_id
+        -member_id
+        -date
+    }
+    class Gym {
+        -gym_name
+        -members
+        -trainers
+        -memberships
+        -payments
+        -attendances
+        +add_member(member)
+        +add_trainer(trainer)
+        +create_membership(...)
+        +record_payment(...)
+        +record_attendance(...)
+        +find_member(member_id)
+        +search_members(keyword)
+        +update_member(...)
+        +delete_member(member_id)
+    }
+    class FileManager {
+        -filename
+        +save_data(gym)
+        +load_gym()
+    }
+
+    Person <|-- Member
+    Person <|-- Trainer
+    Gym "1" *-- "*" Member
+    Gym "1" *-- "*" Trainer
+    Gym "1" *-- "*" Membership
+    Gym "1" *-- "*" Payment
+    Gym "1" *-- "*" Attendance
+    Member "1" --> "*" Membership : has
+    Member "1" --> "*" Payment : makes
+    Member "1" --> "*" Attendance : attends
+    FileManager ..> Gym : saves and loads
